@@ -185,7 +185,7 @@ def ATRC(sorted,budget=conf.budget):
         trc=TRC(sorted,i)
         trcs.append(trc)
     return total/(budget-1),trcs
-  def rauc(sorted, num=conf.num):
+def rauc(sorted, num=conf.num):
     sorted=sorted[:num]
     bug_index = np.where(sorted == 1)[0]
     n = len(sorted)
