@@ -544,29 +544,52 @@ def main():
             pfd_lst.append(p_fault_detected/100.0)
             ideal_pfd_lst.append(ideal_fault_detected/100.0)
             
+           # In each prioritization method's output section, where APFD is calculated
+            # (For example, around line 920)
             apfd = 0
             ideal_apfd = 0
+            rauc = 0
+            artc = 0
             if p_budget == 100:
-                print (pfd_lst, ideal_pfd_lst)
                 apfd = get_APFD(copy.copy(budget_lst), pfd_lst)
                 ideal_apfd = get_APFD(budget_lst, ideal_pfd_lst)
-
+                rauc = get_RAUC(copy.copy(budget_lst), pfd_lst)
+                artc = get_ARTC(copy.copy(budget_lst), pfd_lst)
+            
+            # Then update the print_log statements to include the new metrics
+            print_log("Model2test: {}".format(args.model2test_path), log)
+            print_log("Model2Test Accuracy on labeled data: {}".format(100.0*correct_array[labeled_indices].sum()/misclass_array[labeled_indices].shape[0]), log)
+            print_log("Total faults: {}".format(misclass_array[unlabeled_indices].sum()), log)
+            print_log("Total test cases: {}".format(len(unlabeled_indices)), log)
+            print_log("Percentage of fault detected: %s "%(p_fault_detected), log)
+            print_log("Percentage of fault detected (random): %s "%(random_p_fault_detected), log)
+            print_log("RAUC@100: %s "%(rauc), log)
+            print_log("ARTC: %s "%(artc), log)
+            
+            # And update the CSV output to include the new metrics
             with open(out_file, 'a+') as f:
                 writer = csv.writer(f, delimiter=',')
-                writer.writerow([args.model2test_arch, 
+                writer.writerow([ 
+                                args.model2test_arch, 
                                 args.model2test_path,
                                 budget, 
                                 p_budget,
                                 args.sel_method, 
+                                no_neighbors,
                                 'FaultDetected',
                                 p_fault_detected,
                                 ideal_fault_detected,
-                                random_p_fault_detected,
-                                'APFD',
+                                random_p_fault_detected, 
+                                'APFD', 
                                 apfd,
                                 ideal_apfd,
                                 'TRC',
-                                p_fault_detected/ideal_fault_detected])
+                                p_fault_detected/ideal_fault_detected,
+                                'RAUC',
+                                rauc,
+                                'ARTC',
+                                artc
+                                ])
 
             print_log('success!', log)
         log.close()
