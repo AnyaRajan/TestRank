@@ -20,7 +20,7 @@ DATE=`date +%Y-%m-%d`
 echo $DATE
 DIRECTORY=./save/${DATE}/
 if [ ! -d "$DIRECTORY" ]; then
-    mkdir ./save/${DATE}/
+    mkdir -p "$DIRECTORY"
 fi
 
 ############### Step selection   ##############################
