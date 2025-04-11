@@ -172,6 +172,38 @@ no_neighbors = args.no_neighbors
 
 ###############################################################################
 ###############################################################################
+
+def ATRC(sorted,budget=conf.budget):
+    total=0
+    trcs=[]
+    for i in range(1,budget):
+        trc=TRC(sorted,i)
+        total+=trc
+        trcs.append(trc)
+
+    for i in range(budget,len(sorted)):
+        trc=TRC(sorted,i)
+        trcs.append(trc)
+    return total/(budget-1),trcs
+  def rauc(sorted, num=conf.num):
+    sorted=sorted[:num]
+    bug_index = np.where(sorted == 1)[0]
+    n = len(sorted)
+    m = len(bug_index)
+    if m==0:
+        return 0
+    n_0=0
+    true=[]
+    for i in sorted:
+        if i==1:
+            n_0=n_0+1
+            true.append(n_0)
+        else:
+            true.append(n_0)
+    ideal=(n-m)*m+(m+1)*m/2
+    RAUC=np.sum(true)/ideal
+    return RAUC
+    
 def main():
     global retrain_epoch
     global no_neighbors
