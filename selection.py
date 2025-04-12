@@ -548,8 +548,14 @@ def main():
             # (For example, around line 920)
             apfd = 0
             ideal_apfd = 0
-            rauc = 0
-            artc = 0
+            apfd = 0
+            rauc_100 = 0
+            rauc_200 = 0
+            rauc_500 = 0
+            rauc_1000 = 0
+            rauc_all = 0
+            atrc_val = 0
+
             if p_budget == 100:
                 apfd = get_APFD(copy.copy(budget_lst), pfd_lst)
                 ideal_apfd = get_APFD(budget_lst, ideal_pfd_lst)
