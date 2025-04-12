@@ -172,7 +172,13 @@ no_neighbors = args.no_neighbors
 
 ###############################################################################
 ###############################################################################
-
+def TRC(sorted, budget=1000):
+    num_bug=len(np.where(sorted == 1)[0])
+    tmp=sorted[:budget]
+    bug_index= np.where(tmp == 1)[0]
+    m=len(bug_index)
+    TRC=m/min(budget,num_bug)
+    return TRC
 def ATRC(sorted,budget=1000):
     total=0
     trcs=[]
