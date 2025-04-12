@@ -607,7 +607,7 @@ def main():
                                 'RAUC',
                                 rauc_100,
                                 'ARTC',
-                                artc_val
+                                atrc_val
                                 ])
 
             print_log('success!', log)
