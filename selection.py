@@ -173,7 +173,7 @@ no_neighbors = args.no_neighbors
 ###############################################################################
 ###############################################################################
 
-def ATRC(sorted,budget=conf.budget):
+def ATRC(sorted,budget=1000):
     total=0
     trcs=[]
     for i in range(1,budget):
@@ -185,7 +185,7 @@ def ATRC(sorted,budget=conf.budget):
         trc=TRC(sorted,i)
         trcs.append(trc)
     return total/(budget-1),trcs
-def rauc(sorted, num=conf.num):
+def rauc(sorted, num=200):
     sorted=sorted[:num]
     bug_index = np.where(sorted == 1)[0]
     n = len(sorted)
@@ -553,9 +553,23 @@ def main():
             if p_budget == 100:
                 apfd = get_APFD(copy.copy(budget_lst), pfd_lst)
                 ideal_apfd = get_APFD(budget_lst, ideal_pfd_lst)
-                rauc = get_RAUC(copy.copy(budget_lst), pfd_lst)
-                artc = get_ARTC(copy.copy(budget_lst), pfd_lst)
             
+                # RAUC and ATRC computation
+                is_bug = misclass_array[ranked_indexes]
+                rauc_100 = rauc(is_bug, 100)
+                rauc_200 = rauc(is_bug, 200)
+                rauc_500 = rauc(is_bug, 500)
+                rauc_1000 = rauc(is_bug, 1000)
+                rauc_all = rauc(is_bug, len(is_bug))
+                atrc_val, trcs = ATRC(is_bug, len(test_error_index))
+            
+                print("RAUC@100:", rauc_100)
+                print("RAUC@200:", rauc_200)
+                print("RAUC@500:", rauc_500)
+                print("RAUC@1000:", rauc_1000)
+                print("RAUC@All:", rauc_all)
+                print("ATRC:", atrc_val)
+
             # Then update the print_log statements to include the new metrics
             print_log("Model2test: {}".format(args.model2test_path), log)
             print_log("Model2Test Accuracy on labeled data: {}".format(100.0*correct_array[labeled_indices].sum()/misclass_array[labeled_indices].shape[0]), log)
@@ -563,8 +577,7 @@ def main():
             print_log("Total test cases: {}".format(len(unlabeled_indices)), log)
             print_log("Percentage of fault detected: %s "%(p_fault_detected), log)
             print_log("Percentage of fault detected (random): %s "%(random_p_fault_detected), log)
-            print_log("RAUC@100: %s "%(rauc), log)
-            print_log("ARTC: %s "%(artc), log)
+           
             
             # And update the CSV output to include the new metrics
             with open(out_file, 'a+') as f:
