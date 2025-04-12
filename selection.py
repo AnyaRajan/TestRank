@@ -567,7 +567,7 @@ def main():
                 rauc_500 = rauc(is_bug, 500)
                 rauc_1000 = rauc(is_bug, 1000)
                 rauc_all = rauc(is_bug, len(is_bug))
-                atrc_val, trcs = ATRC(is_bug, len(test_error_index))
+                atrc_val, trcs = ATRC(is_bug, misclass_array.sum())
             
                 print("RAUC@100:", rauc_100)
                 print("RAUC@200:", rauc_200)
