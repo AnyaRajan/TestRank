@@ -570,13 +570,13 @@ def main():
                 print("RAUC@All:", rauc_all)
                 print("ATRC:", atrc_val)
 
-            # Then update the print_log statements to include the new metrics
-            print_log("Model2test: {}".format(args.model2test_path), log)
-            print_log("Model2Test Accuracy on labeled data: {}".format(100.0*correct_array[labeled_indices].sum()/misclass_array[labeled_indices].shape[0]), log)
-            print_log("Total faults: {}".format(misclass_array[unlabeled_indices].sum()), log)
-            print_log("Total test cases: {}".format(len(unlabeled_indices)), log)
-            print_log("Percentage of fault detected: %s "%(p_fault_detected), log)
-            print_log("Percentage of fault detected (random): %s "%(random_p_fault_detected), log)
+            # # Then update the print_log statements to include the new metrics
+            # print_log("Model2test: {}".format(args.model2test_path), log)
+            # print_log("Model2Test Accuracy on labeled data: {}".format(100.0*correct_array[labeled_indices].sum()/misclass_array[labeled_indices].shape[0]), log)
+            # print_log("Total faults: {}".format(misclass_array[unlabeled_indices].sum()), log)
+            # print_log("Total test cases: {}".format(len(unlabeled_indices)), log)
+            # print_log("Percentage of fault detected: %s "%(p_fault_detected), log)
+            # print_log("Percentage of fault detected (random): %s "%(random_p_fault_detected), log)
            
             
             # And update the CSV output to include the new metrics
