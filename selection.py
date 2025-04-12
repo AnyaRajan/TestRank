@@ -605,7 +605,7 @@ def main():
                                 'TRC',
                                 p_fault_detected/ideal_fault_detected,
                                 'RAUC',
-                                rauc,
+                                rauc_100,
                                 'ARTC',
                                 artc
                                 ])
